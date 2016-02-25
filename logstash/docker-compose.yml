@@ -1,0 +1,19 @@
+elasticsearch:
+  image: elasticsearch
+
+kibana:
+  image: kibana
+  ports:
+  - "5601:5601"
+  links:
+  - elasticsearch
+
+logstash:
+  image: logstash
+  ports:
+  - "4560:4560"
+  links:
+  - elasticsearch
+  volumes:
+  - ./config-dir:/config-dir
+  command: logstash agent -f /config-dir --debug
